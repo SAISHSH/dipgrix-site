@@ -148,17 +148,19 @@
     
     <!-- End of headEnd -->
 <style>
-  #framer-badge-container,
+  /* Target any floating badge, link, or frame in the bottom right corner */
+  #__framer-badge-container,
   [data-framer-badge],
   [data-framer-component-type="Badge"],
   a[href*="framer.com"],
-  div[class*="framer-"][class*="-badge"],
-  div[style*="bottom"][style*="right"][style*="fixed"],
-  div[style*="position: fixed"][style*="bottom:"] {
+  a[href*="framer.website"],
+  iframe[src*="framer"],
+  div[style*="fixed"][style*="bottom"] {
     display: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
     pointer-events: none !important;
+    transform: scale(0) !important;
   }
 </style>
 </head>
@@ -923,7 +925,12 @@
 </div>
 	<!-- Start of bodyEnd -->
     
-    <!-- End of bodyEnd -->
+<script>
+  const removeBadge = () => {
+    document.querySelectorAll('a[href*="framer"], [data-framer-badge], #__framer-badge-container').forEach(el => el.remove());
+  };
+  setInterval(removeBadge, 300);
+</script>    <!-- End of bodyEnd -->
 </body>
 
 <!-- Mirrored from dipgrix.framer.website/contact by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 08 Aug 2026 22:32:59 GMT -->
