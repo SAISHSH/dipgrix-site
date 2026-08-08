@@ -150,13 +150,17 @@
 <style>
   #framer-badge-container,
   [data-framer-badge],
-  a[href*="framer.com"] {
+  [data-framer-component-type="Badge"],
+  a[href*="framer.com"],
+  div[class*="framer-"][class*="-badge"],
+  div[style*="bottom"][style*="right"][style*="fixed"],
+  div[style*="position: fixed"][style*="bottom:"] {
     display: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
     pointer-events: none !important;
   }
-</style>	
+</style>
 </head>
 <body>
 	<script async src="https://events.framer.com/script?v=2" data-fid="3549236ab99e7c9c7ad958378d5f28a911c7a56a048271a16d4d6baa7055d424" data-no-nt></script>
