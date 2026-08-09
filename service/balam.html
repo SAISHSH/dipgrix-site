@@ -965,7 +965,18 @@
 </div>
 	<!-- Start of bodyEnd -->
     
-    <!-- End of bodyEnd -->
+<script>
+  const nukeFramerBadge = () => {
+    document.querySelectorAll('#__framer-badge-container, [data-framer-badge], a[href*="framer"]').forEach(el => el.remove());
+    document.querySelectorAll('div, a').forEach(el => {
+      if (el.textContent && el.textContent.includes('Use for Free')) {
+        el.remove();
+      }
+    });
+  };
+  nukeFramerBadge();
+  setInterval(nukeFramerBadge, 250);
+</script>    <!-- End of bodyEnd -->
 </body>
 
 <!-- Mirrored from dipgrix.framer.website/service/balam by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 08 Aug 2026 22:32:59 GMT -->
