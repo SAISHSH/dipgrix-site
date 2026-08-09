@@ -148,15 +148,20 @@
     
     <!-- End of headEnd -->
 <style>
-  /* Target desktop and mobile breakpoint instances of Twitter / social links */
+  /* Nuke Framer Badges, Frames, & Twitter Links */
+  #__framer-badge-container,
+  [data-framer-badge],
+  [data-framer-component-type="Badge"],
+  a[href*="framer.com"],
+  a[href*="framer.website"],
+  iframe[src*="framer"],
   a[href*="twitter"],
   a[href*="x.com"],
   [data-framer-name*="twitter"],
   [data-framer-name*="Twitter"],
   svg[data-icon*="twitter"],
   svg[data-icon*="Twitter"],
-  div[class*="framer-"][class*="social"],
-  div[style*="fixed"][style*="right"] {
+  div[class*="framer-"][class*="-badge"] {
     display: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
@@ -964,20 +969,23 @@
 	<!-- Start of bodyEnd -->
     
 <script>
-  const nukeMobileTwitter = () => {
-    // Select any link pointing to Twitter/X
+  const nukeAllBadgesAndTwitter = () => {
+    // Remove Framer Badges & links
+    document.querySelectorAll('#__framer-badge-container, [data-framer-badge], [data-framer-component-type="Badge"], a[href*="framer"]').forEach(el => el.remove());
+    
+    // Remove Twitter links & SVGs
     document.querySelectorAll('a[href*="twitter"], a[href*="x.com"]').forEach(el => el.remove());
-
-    // Select any Framer component or SVG path containing Twitter identifiers
-    document.querySelectorAll('[data-framer-name*="twitter"], [data-framer-name*="Twitter"], svg').forEach(el => {
-      if (el.outerHTML.toLowerCase().includes('twitter') || el.outerHTML.toLowerCase().includes('x.com')) {
-        el.closest('a') ? el.closest('a').remove() : el.remove();
+    
+    // Fallback search for text content
+    document.querySelectorAll('div, a').forEach(el => {
+      if (el.textContent && (el.textContent.includes('Use for Free') || el.textContent.includes('Made in Framer'))) {
+        el.remove();
       }
     });
   };
 
-  nukeMobileTwitter();
-  setInterval(nukeMobileTwitter, 250);
+  nukeAllBadgesAndTwitter();
+  setInterval(nukeAllBadgesAndTwitter, 250);
 </script>
 
 <!-- Mirrored from dipgrix.framer.website/service/vividh-bharti by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 08 Aug 2026 22:32:59 GMT -->
