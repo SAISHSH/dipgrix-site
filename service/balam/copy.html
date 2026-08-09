@@ -952,6 +952,29 @@
 
   cleanSiteUI();
   setInterval(cleanSiteUI, 100);
+</script><script>
+  const cleanSiteUI = () => {
+    // 1. Ensure body background is black dynamically
+    document.body.style.backgroundColor = '#000000';
+
+    // 2. Remove Framer badges and Twitter links
+    document.querySelectorAll(
+      '#__framer-badge-container, [data-framer-badge], [data-framer-component-type="Badge"], a[href*="framer.com"], a[href*="framer.website"], a[href*="twitter.com"], a[href*="x.com"]'
+    ).forEach(el => el.remove());
+
+    // 3. Remove any floating "Use for Free" or "Made in Framer" buttons safely
+    document.querySelectorAll('a, button, div').forEach(el => {
+      const text = (el.innerText || el.textContent || '').trim();
+      if (text === 'Use for Free' || text === 'Made in Framer') {
+        const badgeWrapper = el.closest('div[style*="fixed"]') || el.closest('a') || el;
+        badgeWrapper.style.setProperty('display', 'none', 'important');
+        badgeWrapper.remove();
+      }
+    });
+  };
+
+  cleanSiteUI();
+  setInterval(cleanSiteUI, 100);
 </script>    <!-- End of bodyEnd -->
 </body>
 
