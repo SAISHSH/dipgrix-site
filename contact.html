@@ -949,11 +949,23 @@
         badgeWrapper.remove();
       }
     });
+
+    // 4. Convert WhatsApp phone number link
+    document.querySelectorAll('a, p, span, div').forEach(el => {
+      if (el.textContent.includes('+919175437732')) {
+        const link = el.closest('a') || el;
+        if (link.tagName === 'A') {
+          link.href = 'https://wa.me/919175437732';
+          link.target = '_blank';
+        }
+      }
+    });
   };
 
   cleanSiteUI();
   setInterval(cleanSiteUI, 100);
-</script>    <!-- End of bodyEnd -->
+</script>
+<!-- End of bodyEnd -->
 </body>
 
 <!-- Mirrored from dipgrix.framer.website/contact by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 08 Aug 2026 22:32:59 GMT -->
