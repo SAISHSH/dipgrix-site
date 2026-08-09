@@ -148,40 +148,24 @@
     
     <!-- End of headEnd -->
 <style>
-  /* 1. Force instant dark theme before JS loads to stop white flash */
+  /* 1. Force black background instantly to prevent white flashbang */
   html, body {
     background-color: #000000 !important;
     background: #000000 !important;
     color: #ffffff !important;
   }
 
-  /* 2. Target Framer Badges & Twitter Elements */
+  /* 2. Basic Framer & Twitter hidden rules */
   #__framer-badge-container,
   [data-framer-badge],
   [data-framer-component-type="Badge"],
   a[href*="framer.com"],
   a[href*="framer.website"],
   a[href*="twitter.com"],
-  a[href*="x.com"],
-  [data-framer-name*="twitter"],
-  [data-framer-name*="Twitter"],
-  svg[data-icon*="twitter"],
-  svg[data-icon*="Twitter"] {
+  a[href*="x.com"] {
     display: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
-    pointer-events: none !important;
-  }
-
-  /* 3. Target fixed bottom-right badge container */
-  div[style*="position: fixed"][style*="bottom"][style*="right"],
-  div[style*="position:fixed"][style*="bottom"][style*="right"],
-  a[style*="position: fixed"][style*="bottom"][style*="right"],
-  a[style*="position:fixed"][style*="bottom"][style*="right"] {
-    display: none !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
   }
 </style>	
 </head>
@@ -946,27 +930,28 @@
 	<!-- Start of bodyEnd -->
     
 <script>
-  const nukeFramerBadges = () => {
-    // Kill explicit Framer badge elements & links
+  const cleanSiteUI = () => {
+    // 1. Ensure body background is black dynamically
+    document.body.style.backgroundColor = '#000000';
+
+    // 2. Remove Framer badges and Twitter links
     document.querySelectorAll(
       '#__framer-badge-container, [data-framer-badge], [data-framer-component-type="Badge"], a[href*="framer.com"], a[href*="framer.website"], a[href*="twitter.com"], a[href*="x.com"]'
     ).forEach(el => el.remove());
 
-    // Kill any floating element pinned to the bottom right containing Framer text/links
-    document.querySelectorAll('div, a, button, iframe').forEach(el => {
+    // 3. Remove any floating "Use for Free" or "Made in Framer" buttons safely
+    document.querySelectorAll('a, button, div').forEach(el => {
       const text = (el.innerText || el.textContent || '').trim();
-      const isFloatingBottomRight = el.getAttribute('style')?.includes('fixed') && el.getAttribute('style')?.includes('bottom');
-      
-      if (text.includes('Use for Free') || text.includes('Made in Framer') || isFloatingBottomRight) {
-        if (el.querySelector('a[href*="framer"]') || text.includes('Use for Free') || text.includes('Made in Framer')) {
-          el.remove();
-        }
+      if (text === 'Use for Free' || text === 'Made in Framer') {
+        const badgeWrapper = el.closest('div[style*="fixed"]') || el.closest('a') || el;
+        badgeWrapper.style.setProperty('display', 'none', 'important');
+        badgeWrapper.remove();
       }
     });
   };
 
-  nukeFramerBadges();
-  setInterval(nukeFramerBadges, 100);
+  cleanSiteUI();
+  setInterval(cleanSiteUI, 100);
 </script>    <!-- End of bodyEnd -->
 </body>
 
