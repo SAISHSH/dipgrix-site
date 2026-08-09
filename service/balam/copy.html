@@ -972,7 +972,13 @@
       }
     });
   };
-
+document.title = "Balam - Dipgrix";
+  const observer = new MutationObserver(() => {
+    if (document.title !== "Balam - Dipgrix") {
+      document.title = "Balam - Dipgrix";
+    }
+  });
+  observer.observe(document.querySelector('title'), { childList: true });
   cleanSiteUI();
   setInterval(cleanSiteUI, 100);
 </script>    <!-- End of bodyEnd -->
