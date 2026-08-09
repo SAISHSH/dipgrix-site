@@ -990,6 +990,13 @@
 
   cleanSiteUI();
   setInterval(cleanSiteUI, 100);
+	document.title = "Retro Sajaan - Dipgrix";
+const observer = new MutationObserver(() => {
+  if (document.title !== "Retro Sajaan - Dipgrix") {
+    document.title = "Retro Sajaan - Dipgrix";
+  }
+});
+observer.observe(document.querySelector('title'), { childList: true });
 </script>    <!-- End of bodyEnd -->
 </body>
 
