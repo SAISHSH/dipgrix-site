@@ -148,22 +148,34 @@
     
     <!-- End of headEnd -->
 <style>
-  /* Target any floating badge, link, frame, or Twitter icon */
+  /* 1. Target Framer Badges & Twitter Elements Specifically */
   #__framer-badge-container,
   [data-framer-badge],
   [data-framer-component-type="Badge"],
   a[href*="framer.com"],
   a[href*="framer.website"],
-  iframe[src*="framer"],
   a[href*="twitter.com"],
   a[href*="x.com"],
-  svg[data-icon="twitter"],
-  div[style*="fixed"][style*="bottom"] {
+  [data-framer-name*="twitter" i],
+  [data-framer-name*="Twitter" i],
+  svg[data-icon*="twitter" i] {
     display: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
     pointer-events: none !important;
-    transform: scale(0) !important;
+  }
+
+  /* 2. Target Mobile Floating CTA Badge specifically without breaking desktop UI */
+  @media (max-width: 810px) {
+    div[class*="framer-"][style*="position: fixed"],
+    div[class*="framer-"][style*="position:fixed"] {
+      /* Only target containers that hold the Framer CTA link */
+      &:has(a[href*="framer"]),
+      &:has(a[href*="twitter"]),
+      &:has(a[href*="x.com"]) {
+        display: none !important;
+      }
+    }
   }
 </style>
 </head>
@@ -929,10 +941,24 @@
 	<!-- Start of bodyEnd -->
     
 <script>
-  const removeBadge = () => {
-    document.querySelectorAll('a[href*="framer"], [data-framer-badge], #__framer-badge-container').forEach(el => el.remove());
+  const cleanFramerAndTwitter = () => {
+    // Target exact Twitter & Framer links only
+    const targets = document.querySelectorAll(
+      'a[href*="twitter.com"], a[href*="x.com"], a[href*="framer.com"], a[href*="framer.website"], #__framer-badge-container, [data-framer-badge]'
+    );
+    targets.forEach(el => el.remove());
+
+    // Target text nodes strictly inside badge elements without breaking parent layout containers
+    document.querySelectorAll('a, button').forEach(el => {
+      const txt = (el.innerText || el.textContent || '').trim();
+      if (txt === 'Use for Free' || txt === 'Made in Framer') {
+        el.remove();
+      }
+    });
   };
-  setInterval(removeBadge, 300);
+
+  cleanFramerAndTwitter();
+  setInterval(cleanFramerAndTwitter, 300);
 </script>    <!-- End of bodyEnd -->
 </body>
 
