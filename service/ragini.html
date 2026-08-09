@@ -148,27 +148,35 @@
     
     <!-- End of headEnd -->
 <style>
-  /* Nuke Framer Badges, Frames, & Twitter Links */
+  /* Hard-nuke Framer badges, floating CTAs, and Twitter icons */
   #__framer-badge-container,
   [data-framer-badge],
   [data-framer-component-type="Badge"],
   a[href*="framer.com"],
   a[href*="framer.website"],
-  iframe[src*="framer"],
   a[href*="twitter"],
   a[href*="x.com"],
   [data-framer-name*="twitter"],
   [data-framer-name*="Twitter"],
   svg[data-icon*="twitter"],
-  svg[data-icon*="Twitter"],
-  div[class*="framer-"][class*="-badge"] {
+  svg[data-icon*="Twitter"] {
     display: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
     pointer-events: none !important;
     transform: scale(0) !important;
   }
-</style>	
+
+  /* Target floating bottom buttons ("Use for Free") */
+  div[style*="position: fixed"][style*="bottom"],
+  div[style*="position:fixed"][style*="bottom"],
+  a[style*="position: fixed"][style*="bottom"],
+  a[style*="position:fixed"][style*="bottom"] {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+</style>>	
 </head>
 <body>
 	<script async src="https://events.framer.com/script?v=2" data-fid="3549236ab99e7c9c7ad958378d5f28a911c7a56a048271a16d4d6baa7055d424" data-no-nt></script>
@@ -969,23 +977,27 @@
 	<!-- Start of bodyEnd -->
     
 <script>
-  const nukeAllBadgesAndTwitter = () => {
-    // Remove Framer Badges & links
+  const obliterateAll = () => {
+    // 1. Kill Twitter links & icons
+    document.querySelectorAll('a[href*="twitter"], a[href*="x.com"], [data-framer-name*="twitter"], [data-framer-name*="Twitter"]').forEach(el => el.remove());
+
+    // 2. Kill Framer badges & free buttons
     document.querySelectorAll('#__framer-badge-container, [data-framer-badge], [data-framer-component-type="Badge"], a[href*="framer"]').forEach(el => el.remove());
-    
-    // Remove Twitter links & SVGs
-    document.querySelectorAll('a[href*="twitter"], a[href*="x.com"]').forEach(el => el.remove());
-    
-    // Fallback search for text content
-    document.querySelectorAll('div, a').forEach(el => {
-      if (el.textContent && (el.textContent.includes('Use for Free') || el.textContent.includes('Made in Framer'))) {
-        el.remove();
+
+    // 3. Scan & destroy any element containing "Use for Free" or "Made in Framer"
+    document.querySelectorAll('div, a, button, span').forEach(el => {
+      if (el.children.length === 0 || el.innerText) {
+        const text = el.innerText || el.textContent || '';
+        if (text.includes('Use for Free') || text.includes('Made in Framer')) {
+          const container = el.closest('a') || el.closest('div[style*="fixed"]') || el;
+          container.remove();
+        }
       }
     });
   };
 
-  nukeAllBadgesAndTwitter();
-  setInterval(nukeAllBadgesAndTwitter, 250);
+  obliterateAll();
+  setInterval(obliterateAll, 100);
 </script>
 </body>
 
