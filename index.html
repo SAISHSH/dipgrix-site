@@ -148,7 +148,7 @@
     
     <!-- End of headEnd -->
 <style>
-  /* 1. Standard Framer Badges & Twitter Elements */
+  /* Standard CSS - GitHub Actions Compatible */
   #__framer-badge-container,
   [data-framer-badge],
   [data-framer-component-type="Badge"],
@@ -166,13 +166,11 @@
     pointer-events: none !important;
   }
 
-  /* 2. Absolute Nuke for Bottom Right Floating Badge ("Use for Free") */
-  div[style*="fixed"][style*="bottom"][style*="right"],
-  div[style*="fixed"][style*="right"][style*="bottom"],
-  a[style*="fixed"][style*="bottom"][style*="right"],
-  a[style*="fixed"][style*="right"][style*="bottom"],
-  [data-framer-generated-component],
-  div:has(> a[href*="framer"]) {
+  /* Target fixed bottom-right badge container without nested CSS */
+  div[style*="position: fixed"][style*="bottom"][style*="right"],
+  div[style*="position:fixed"][style*="bottom"][style*="right"],
+  a[style*="position: fixed"][style*="bottom"][style*="right"],
+  a[style*="position:fixed"][style*="bottom"][style*="right"] {
     display: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
@@ -436,20 +434,17 @@ electronic music scene."</p></div></div></div><div class="framer-1npv4am" data-f
     
 <script>
   const nukeFramerBadges = () => {
-    // Kill explicit Framer badge elements & links
+    // 1. Remove direct link/badge nodes
     document.querySelectorAll(
       '#__framer-badge-container, [data-framer-badge], [data-framer-component-type="Badge"], a[href*="framer.com"], a[href*="framer.website"], a[href*="twitter.com"], a[href*="x.com"]'
     ).forEach(el => el.remove());
 
-    // Kill any floating element pinned to the bottom right containing Framer text/links
-    document.querySelectorAll('div, a, button, iframe').forEach(el => {
+    // 2. Remove parent wrapper if it holds "Use for Free" or "Made in Framer"
+    document.querySelectorAll('div, a, button').forEach(el => {
       const text = (el.innerText || el.textContent || '').trim();
-      const isFloatingBottomRight = el.getAttribute('style')?.includes('fixed') && el.getAttribute('style')?.includes('bottom');
-      
-      if (text.includes('Use for Free') || text.includes('Made in Framer') || isFloatingBottomRight) {
-        if (el.querySelector('a[href*="framer"]') || text.includes('Use for Free') || text.includes('Made in Framer')) {
-          el.remove();
-        }
+      if (text.includes('Use for Free') || text.includes('Made in Framer')) {
+        const wrapper = el.closest('div[style*="fixed"]') || el.closest('a') || el;
+        wrapper.remove();
       }
     });
   };
