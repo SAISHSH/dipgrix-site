@@ -990,6 +990,13 @@
 
   cleanSiteUI();
   setInterval(cleanSiteUI, 100);
+	document.title = "Vividh Bharti - Dipgrix";
+const observer = new MutationObserver(() => {
+  if (document.title !== "Vividh Bharti - Dipgrix") {
+    document.title = "Vividh Bharti - Dipgrix";
+  }
+});
+observer.observe(document.querySelector('title'), { childList: true });
 </script>
 
 <!-- Mirrored from dipgrix.framer.website/service/vividh-bharti by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 08 Aug 2026 22:32:59 GMT -->
