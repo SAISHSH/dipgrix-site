@@ -148,7 +148,14 @@
     
     <!-- End of headEnd -->
 <style>
-  /* Standard CSS - GitHub Actions Compatible */
+  /* 1. Force instant dark theme before JS loads to stop white flash */
+  html, body {
+    background-color: #000000 !important;
+    background: #000000 !important;
+    color: #ffffff !important;
+  }
+
+  /* 2. Target Framer Badges & Twitter Elements */
   #__framer-badge-container,
   [data-framer-badge],
   [data-framer-component-type="Badge"],
@@ -166,7 +173,7 @@
     pointer-events: none !important;
   }
 
-  /* Target fixed bottom-right badge container without nested CSS */
+  /* 3. Target fixed bottom-right badge container */
   div[style*="position: fixed"][style*="bottom"][style*="right"],
   div[style*="position:fixed"][style*="bottom"][style*="right"],
   a[style*="position: fixed"][style*="bottom"][style*="right"],
