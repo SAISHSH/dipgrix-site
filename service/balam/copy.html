@@ -148,7 +148,7 @@
     
     <!-- End of headEnd -->
 <style>
-  /* Target Framer Badges & Twitter Elements */
+  /* 1. Standard Framer Badges & Twitter Elements */
   #__framer-badge-container,
   [data-framer-badge],
   [data-framer-component-type="Badge"],
@@ -160,6 +160,19 @@
   [data-framer-name*="Twitter"],
   svg[data-icon*="twitter"],
   svg[data-icon*="Twitter"] {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  /* 2. Absolute Nuke for Bottom Right Floating Badge ("Use for Free") */
+  div[style*="fixed"][style*="bottom"][style*="right"],
+  div[style*="fixed"][style*="right"][style*="bottom"],
+  a[style*="fixed"][style*="bottom"][style*="right"],
+  a[style*="fixed"][style*="right"][style*="bottom"],
+  [data-framer-generated-component],
+  div:has(> a[href*="framer"]) {
     display: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
@@ -928,22 +941,27 @@
 	<!-- Start of bodyEnd -->
     
 <script>
-  const cleanFramerAndTwitter = () => {
-    const targets = document.querySelectorAll(
-      'a[href*="twitter.com"], a[href*="x.com"], a[href*="framer.com"], a[href*="framer.website"], #__framer-badge-container, [data-framer-badge]'
-    );
-    targets.forEach(el => el.remove());
+  const nukeFramerBadges = () => {
+    // Kill explicit Framer badge elements & links
+    document.querySelectorAll(
+      '#__framer-badge-container, [data-framer-badge], [data-framer-component-type="Badge"], a[href*="framer.com"], a[href*="framer.website"], a[href*="twitter.com"], a[href*="x.com"]'
+    ).forEach(el => el.remove());
 
-    document.querySelectorAll('a, button').forEach(el => {
-      const txt = (el.innerText || el.textContent || '').trim();
-      if (txt === 'Use for Free' || txt === 'Made in Framer') {
-        el.remove();
+    // Kill any floating element pinned to the bottom right containing Framer text/links
+    document.querySelectorAll('div, a, button, iframe').forEach(el => {
+      const text = (el.innerText || el.textContent || '').trim();
+      const isFloatingBottomRight = el.getAttribute('style')?.includes('fixed') && el.getAttribute('style')?.includes('bottom');
+      
+      if (text.includes('Use for Free') || text.includes('Made in Framer') || isFloatingBottomRight) {
+        if (el.querySelector('a[href*="framer"]') || text.includes('Use for Free') || text.includes('Made in Framer')) {
+          el.remove();
+        }
       }
     });
   };
 
-  cleanFramerAndTwitter();
-  setInterval(cleanFramerAndTwitter, 300);
+  nukeFramerBadges();
+  setInterval(nukeFramerBadges, 100);
 </script>    <!-- End of bodyEnd -->
 </body>
 
