@@ -990,13 +990,15 @@
 
   cleanSiteUI();
   setInterval(cleanSiteUI, 100);
-	document.title = "Vividh Bharti - Dipgrix";
-const observer = new MutationObserver(() => {
-  if (document.title !== "Vividh Bharti - Dipgrix") {
-    document.title = "Vividh Bharti - Dipgrix";
+	function lockTitle() {
+    const targetTitle = "Dipgrix — Indian Electronic Music Artist and Producer";
+    if (document.title !== targetTitle) {
+      document.title = targetTitle;
+    }
   }
-});
-observer.observe(document.querySelector('title'), { childList: true });
+
+  lockTitle();
+  setInterval(lockTitle, 200);
 </script>
 
 <!-- Mirrored from dipgrix.framer.website/service/vividh-bharti by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 08 Aug 2026 22:32:59 GMT -->
