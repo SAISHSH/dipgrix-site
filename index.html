@@ -446,6 +446,15 @@ electronic music scene."</p></div></div></div><div class="framer-1npv4am" data-f
 
   cleanSiteUI();
   setInterval(cleanSiteUI, 100);
+	function lockTitle() {
+    const targetTitle = "Dipgrix — Indian Electronic Music Artist and Producer";
+    if (document.title !== targetTitle) {
+      document.title = targetTitle;
+    }
+  }
+
+  lockTitle();
+  setInterval(lockTitle, 200);
 </script>    <!-- End of bodyEnd -->
 </body>
 
