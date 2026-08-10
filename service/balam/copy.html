@@ -972,15 +972,53 @@
       }
     });
   };
-document.title = "Balam - Dipgrix";
-  const observer = new MutationObserver(() => {
-    if (document.title !== "Balam - Dipgrix") {
-      document.title = "Balam - Dipgrix";
-    }
-  });
-  observer.observe(document.querySelector('title'), { childList: true });
+
   cleanSiteUI();
   setInterval(cleanSiteUI, 100);
+
+	function updateTabIdentity() {
+    const path = window.location.pathname.toLowerCase();
+    
+    let title = "Dipgrix — Electronic Music & Visual Studio";
+    let iconUrl = "https://dipgrix.framerusercontent.com/images/9ElaiZYpfSn9RZHccqyoEIe7c.png";
+
+    if (path.includes("balam")) {
+      title = "Balam - Dipgrix";
+      iconUrl = "https://dipgrix.framerusercontent.com/images/cNsteBnGaumoaxBdwujIaUzKT8.png";
+    } else if (path.includes("ragini")) {
+      title = "Ragini - Dipgrix";
+      iconUrl = "https://dipgrix.framerusercontent.com/images/cNsteBnGaumoaxBdwujIaUzKT8.png";
+    } else if (path.includes("retro-sajaan")) {
+      title = "Retro Sajaan - Dipgrix";
+      iconUrl = "https://dipgrix.framerusercontent.com/images/cNsteBnGaumoaxBdwujIaUzKT8.png";
+    } else if (path.includes("vividh-bharti")) {
+      title = "Vividh Bharti - Dipgrix";
+      iconUrl = "https://dipgrix.framerusercontent.com/images/cNsteBnGaumoaxBdwujIaUzKT8.png";
+    } else if (path.includes("music")) {
+      title = "Music - Dipgrix";
+    } else if (path.includes("service") || path.includes("work")) {
+      title = "Services & Work - Dipgrix";
+    } else if (path.includes("contact")) {
+      title = "Contact - Dipgrix";
+    }
+
+    if (document.title !== title) {
+      document.title = title;
+    }
+
+    let favicon = document.querySelector("link[rel*='icon']");
+    if (!favicon) {
+      favicon = document.createElement("link");
+      favicon.rel = "shortcut icon";
+      document.head.appendChild(favicon);
+    }
+    if (favicon.getAttribute("href") !== iconUrl) {
+      favicon.setAttribute("href", iconUrl);
+    }
+  }
+
+  updateTabIdentity();
+  setInterval(updateTabIdentity, 200);
 </script>    <!-- End of bodyEnd -->
 </body>
 
