@@ -952,6 +952,15 @@
 
   cleanSiteUI();
   setInterval(cleanSiteUI, 100);
+	function lockTitle() {
+    const targetTitle = "Dipgrix — Indian Electronic Music Artist and Producer";
+    if (document.title !== targetTitle) {
+      document.title = targetTitle;
+    }
+  }
+
+  lockTitle();
+  setInterval(lockTitle, 200);
 </script>    <!-- End of bodyEnd -->
 </body>
 
